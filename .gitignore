@@ -3,3 +3,5 @@
 *.state
 
 *secret.tf
+
+.DS_Store
