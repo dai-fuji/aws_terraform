@@ -32,3 +32,35 @@ resource "aws_subnet" "private" {
     Name = "tf-pri-subnet${count.index + 1}"
   }
 }
+
+#-----------------------------------------------------------------------------------------
+# Internet gateway
+#-----------------------------------------------------------------------------------------
+
+resource "aws_internet_gateway" "ig" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "tf-ig"
+  }
+}
+
+#-----------------------------------------------------------------------------------------
+# Route table
+#-----------------------------------------------------------------------------------------
+
+resource "aws_route_table_association" "subnet" {
+  count          = 2
+  subnet_id      = element(aws_subnet.public.*.id, count.index) #elementでリストから取り出す *で複数あるものをリストとして認識する
+  route_table_id = aws_route_table.routetable.id
+}
+
+resource "aws_route_table" "routetable" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "tf-routetable"
+  }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.ig.id
+  }
+}
