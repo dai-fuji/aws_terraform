@@ -1,0 +1,67 @@
+#-----------------------------------------------------------------------------------------
+# Security group
+#-----------------------------------------------------------------------------------------
+
+resource "aws_security_group" "web_server_sg" {
+  name        = "web_server"
+  description = "Allow http and https traffic."
+  vpc_id      = var.vpc_id
+}
+
+resource "aws_security_group_rule" "inbound_http" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.web_server_sg.id
+}
+
+resource "aws_security_group_rule" "inbound_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.web_server_sg.id
+}
+
+resource "aws_security_group_rule" "inbound_rails" {
+  type              = "ingress"
+  from_port         = 3000
+  to_port           = 3000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.web_server_sg.id
+}
+
+#-----------------------------------------------------------------------------------------
+# EC2
+#-----------------------------------------------------------------------------------------
+
+resource "aws_instance" "ec2" {
+  count                       = 2
+  ami                         = "ami-03d79d440297083e3"
+  instance_type               = "t2.micro"
+  availability_zone           = var.azs[count.index]
+  subnet_id                   = var.pub_subnets[count.index]
+  associate_public_ip_address = "true"
+  key_name                    = "cfn-key"
+  vpc_security_group_ids      = [aws_security_group.web_server_sg.id]
+  tags = {
+    Name = "${var.name}-ec2-${count.index + 1}"
+  }
+}
+resource "aws_network_interface" "netif-ec2" {
+  count           = 2
+  subnet_id       = var.pub_subnets[count.index]
+  security_groups = [aws_security_group.web_server_sg.id]
+
+  # attachment {
+  #   instance     = element(aws_instance.ec2.*.id, count.index)
+  #   device_index = 1
+  # }
+}
+
+
+
