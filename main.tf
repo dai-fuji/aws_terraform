@@ -50,8 +50,15 @@ module "ec2" {
 
 }
 
-/*
+
 module "rds" {
-  source = "./modules/rds"
+  source      = "./modules/rds"
+  name        = var.name
+  azs         = var.azs
+  vpc_id      = module.network.vpc_id
+  pri_subnets = module.network.pri_subnets
+  db_user     = var.db_user
+  db_password = var.db_password
+
 }
-*/
+

@@ -41,7 +41,7 @@ resource "aws_security_group_rule" "inbound_rails" {
 
 resource "aws_instance" "ec2" {
   count                       = 2
-  ami                         = "ami-03d79d440297083e3"
+  ami                         = "ami-04204a8960917fd92"
   instance_type               = "t2.micro"
   availability_zone           = var.azs[count.index]
   subnet_id                   = var.pub_subnets[count.index]
@@ -56,11 +56,6 @@ resource "aws_network_interface" "netif-ec2" {
   count           = 2
   subnet_id       = var.pub_subnets[count.index]
   security_groups = [aws_security_group.web_server_sg.id]
-
-  # attachment {
-  #   instance     = element(aws_instance.ec2.*.id, count.index)
-  #   device_index = 1
-  # }
 }
 
 
