@@ -5,6 +5,7 @@ variable "region" {}
 variable "name" {}
 variable "vpc_cidr" {}
 variable "azs" {}
+variable "env" {}
 
 #-----------------------------------------------------------------------------------------
 # Main
@@ -51,6 +52,7 @@ module "ec2" {
   azs         = var.azs
   vpc_id      = module.network.vpc_id
   pub_subnets = module.network.pub_subnets
+  env         = var.env
 
 }
 
@@ -64,8 +66,9 @@ module "ec2" {
 #   azs         = var.azs
 #   vpc_id      = module.network.vpc_id
 #   pri_subnets = module.network.pri_subnets
-#   db_user     = var.db_user
+#   db_user     = var.db_usegit 
 #   db_password = var.db_password
+#   env         = var.env
 
 # }
 

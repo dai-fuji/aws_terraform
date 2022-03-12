@@ -27,7 +27,7 @@ resource "aws_db_subnet_group" "rds-subnet-group" {
 }
 
 resource "aws_db_instance" "rds" {
-  count                  = 1
+  count                  = var.env == "prd" ? 2 : 1
   allocated_storage      = 10
   max_allocated_storage  = 20
   engine                 = "mysql"
