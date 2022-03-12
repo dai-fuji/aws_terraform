@@ -73,11 +73,25 @@ module "ec2" {
 # }
 
 #-----------------------------------------------------------------------------------------
-# EC2
+# S3
 #-----------------------------------------------------------------------------------------
 
 module "s3" {
   source = "./modules/s3"
   name   = var.name
   env    = var.env
+}
+
+#-----------------------------------------------------------------------------------------
+# ALB
+#-----------------------------------------------------------------------------------------
+
+module "alb" {
+  source          = "./modules/alb"
+  name            = var.name
+  vpc_id          = module.network.vpc_id
+  env             = var.env
+  pub_subnets     = module.network.pub_subnets
+  webserver_sg_id = module.ec2.webserver_sg_id
+  ec2_id          = module.ec2.ec2_id
 }
