@@ -14,20 +14,22 @@ resource "aws_vpc" "vpc" {
 #-----------------------------------------------------------------------------------------
 
 resource "aws_subnet" "public" {
-  count             = 2
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index)
-  availability_zone = var.azs[count.index]
+  count                   = 2
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index)
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = "true"
   tags = {
     Name = "${var.name}-pub-subnet${count.index + 1}"
   }
 }
 
 resource "aws_subnet" "private" {
-  count             = 2
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index + length(aws_subnet.public)) #publicの連続でカウント値を使う為にlengthを足す
-  availability_zone = var.azs[count.index]
+  count                   = 2
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index + length(aws_subnet.public)) #publicの連続でカウント値を使う為にlengthを足す
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = "false"
   tags = {
     Name = "${var.name}-pri-subnet${count.index + 1}"
   }

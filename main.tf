@@ -41,6 +41,10 @@ module "network" {
   region   = var.region
 }
 
+#-----------------------------------------------------------------------------------------
+# EC2
+#-----------------------------------------------------------------------------------------
+
 module "ec2" {
   source      = "./modules/ec2"
   name        = var.name
@@ -50,15 +54,18 @@ module "ec2" {
 
 }
 
+#-----------------------------------------------------------------------------------------
+# RDS MySQL
+#-----------------------------------------------------------------------------------------
 
-module "rds" {
-  source      = "./modules/rds"
-  name        = var.name
-  azs         = var.azs
-  vpc_id      = module.network.vpc_id
-  pri_subnets = module.network.pri_subnets
-  db_user     = var.db_user
-  db_password = var.db_password
+# module "rds" {
+#   source      = "./modules/rds"
+#   name        = var.name
+#   azs         = var.azs
+#   vpc_id      = module.network.vpc_id
+#   pri_subnets = module.network.pri_subnets
+#   db_user     = var.db_user
+#   db_password = var.db_password
 
-}
+# }
 

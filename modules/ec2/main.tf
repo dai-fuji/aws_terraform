@@ -6,6 +6,9 @@ resource "aws_security_group" "web_server_sg" {
   name        = "web_server"
   description = "Allow http and https traffic."
   vpc_id      = var.vpc_id
+  tags = {
+    Name = "${var.name}-sg"
+  }
 }
 
 resource "aws_security_group_rule" "inbound_http" {
@@ -31,6 +34,15 @@ resource "aws_security_group_rule" "inbound_rails" {
   from_port         = 3000
   to_port           = 3000
   protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.web_server_sg.id
+}
+
+resource "aws_security_group_rule" "outbound_rails" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "all"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.web_server_sg.id
 }
