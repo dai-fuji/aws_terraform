@@ -1,8 +1,11 @@
+#terraform
 /.terraform
-
 *.state
 *.backup
+*.hcl
 
+#認証情報
 *secret.tf
 
+#others
 .DS_Store
