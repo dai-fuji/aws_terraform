@@ -2,7 +2,6 @@
 <br>
 
 ## 構成図
----
 <br>
 
 ![構成図](/infrastructure_diagram.jpg)
@@ -10,7 +9,6 @@
 <br>
 
 ## リソース一覧
----
 <br>
 
 - VPC
@@ -27,7 +25,6 @@
 <br>
 
 ## リソース作成手順
----
 <br>
 
 0. terraformのインストール、git clone（詳細は割愛）
