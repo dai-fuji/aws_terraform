@@ -25,9 +25,7 @@ terraform {
 }
 
 provider "aws" {
-  access_key = var.access_key
-  secret_key = var.secret_key
-  region     = var.region
+  profile = "terraform" #[aws config --profile ***]で名前付きプロファイルを作成
 }
 
 #-----------------------------------------------------------------------------------------

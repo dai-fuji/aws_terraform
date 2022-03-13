@@ -6,6 +6,7 @@
 
 #認証情報
 *secret.tf
+*secret.tfvars
 
 #others
 .DS_Store
