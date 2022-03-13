@@ -4,7 +4,7 @@
 
 name   = "tf"
 region = "ap-northeast-1"
-env    = "env"
+env    = "env" # checking prd or not
 
 #-----------------------------------------------------------------------------------------
 # Network
