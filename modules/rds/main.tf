@@ -27,21 +27,25 @@ resource "aws_db_subnet_group" "rds-subnet-group" {
 }
 
 resource "aws_db_instance" "rds" {
-  count                  = var.env == "prd" ? 2 : 1
   allocated_storage      = 10
   max_allocated_storage  = 20
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
-  name                   = "mydb${count.index + 1}"
+  db_name                = "mydb"
   username               = var.db_user
   password               = var.db_password
   parameter_group_name   = "default.mysql5.7"
   skip_final_snapshot    = true
-  availability_zone      = var.azs[count.index]
+  availability_zone      = var.azs[0]
   db_subnet_group_name   = aws_db_subnet_group.rds-subnet-group.name
   vpc_security_group_ids = [aws_security_group.db_server_sg.id]
   tags = {
-    Name = "${var.name}-rds-${count.index + 1}"
+    Name = "${var.name}-rds"
   }
+}
+
+resource "aws_network_interface" "netif-db" {
+  subnet_id       = var.pri_subnets[0]
+  security_groups = [aws_security_group.db_server_sg.id]
 }

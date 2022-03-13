@@ -66,8 +66,9 @@ resource "aws_instance" "ec2" {
   user_data = file("modules/ec2/script.sh")
 
 }
+
 resource "aws_network_interface" "netif-ec2" {
-  count           = 2
+  count           = var.env == "prd" ? 2 : 1
   subnet_id       = var.pub_subnets[count.index]
   security_groups = [aws_security_group.web_server_sg.id]
 }

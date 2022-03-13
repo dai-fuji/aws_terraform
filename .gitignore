@@ -9,4 +9,5 @@
 *secret.tfvars
 
 #others
+*.drawio
 .DS_Store

@@ -18,6 +18,16 @@ resource "aws_lb_target_group" "target_group" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
+
+  health_check {
+    interval            = 30
+    path                = "/"
+    port                = 80
+    timeout             = 5
+    unhealthy_threshold = 2
+    matcher             = 200
+  }
+
 }
 
 resource "aws_lb_target_group_attachment" "alb_attach" {

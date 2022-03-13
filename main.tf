@@ -58,17 +58,17 @@ module "ec2" {
 # RDS MySQL
 #-----------------------------------------------------------------------------------------
 
-# module "rds" {
-#   source      = "./modules/rds"
-#   name        = var.name
-#   azs         = var.azs
-#   vpc_id      = module.network.vpc_id
-#   pri_subnets = module.network.pri_subnets
-#   db_user     = var.db_usegit 
-#   db_password = var.db_password
-#   env         = var.env
+module "rds" {
+  source      = "./modules/rds"
+  name        = var.name
+  azs         = var.azs
+  vpc_id      = module.network.vpc_id
+  pri_subnets = module.network.pri_subnets
+  db_user     = var.db_user
+  db_password = var.db_password
+  env         = var.env
 
-# }
+}
 
 #-----------------------------------------------------------------------------------------
 # S3
