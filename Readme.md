@@ -68,7 +68,6 @@ variable "db_password" {
 /.terraform
 *.state #認証情報を含みます
 *.backup #認証情報を含みます
-*.hcl
 
 #認証情報
 *secret.tf #手順5で作成したファイル名
