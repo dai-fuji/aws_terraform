@@ -24,6 +24,37 @@
 <br>
 <br>
 
+## ファイル構成
+```
+.
+├── main.tf
+├── modules
+│   ├── alb
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   └── variables.tf
+│   ├── ec2
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   ├── script.sh
+│   │   └── variables.tf
+│   ├── network
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   └── variables.tf
+│   ├── rds
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   └── variables.tf
+│   └── s3
+│       ├── main.tf
+│       ├── outputs.tf
+│       └── variables.tf
+├── secret.tf
+└── terraform.tfvars
+```
+
+
 ## リソース作成手順
 <br>
 
